@@ -87,7 +87,7 @@ const ForGotPasswordScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => navigation.navigate('DrawerNavigatorRoutesScreen')}>
+              onPress={() => navigation.navigate('LoginScreen')}>
               <Text style={styles.buttonTextStyle}>Send</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>

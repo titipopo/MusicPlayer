@@ -1,27 +1,23 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   View,
   Text,
   ScrollView,
-  Image,
-  Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
 import Loader from './Components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { auth } from '../../firebase';
+import InputText from './Components/InputText';
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-
-  const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
     setErrortext('');
@@ -39,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         const user = userCredentials.user;
         console.log(userCredentials);
         console.log("Login with" + user.email);
-        navigation.navigate('DrawerNavigatorRoutesScreen');
+        navigation.navigate('DrawerNavigator');
         setLoading(false);
       })
       .catch(() => {
@@ -52,7 +48,8 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={styles.mainBody}>
       <Loader loading={loading} />
       <ScrollView
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps='handled'
+        scrollEnabled={false}
         contentContainerStyle={{
           flex: 1,
           justifyContent: 'center',
@@ -63,41 +60,22 @@ const LoginScreen = ({ navigation }) => {
             <View style={{ alignItems: 'center' }}>
               <Ionicons name="checkmark-circle-outline" size={50}></Ionicons>
             </View>
-            <View style={styles.SectionStyle}>
-
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserEmail) => setUserEmail(UserEmail)}
-                placeholder="Enter Email"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current &&
-                  passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserPassword) =>
-                  setUserPassword(UserPassword)
-                }
-                placeholder="Enter Password"
-                placeholderTextColor="#8b9cb5"
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
-                secureTextEntry={true}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-              />
-            </View>
+            <InputText
+              type='at-outline'
+              keyboardType='email-address'
+              secureTextEntry={false}
+              iconFlag={true}
+              placeholder='Enter Email'
+              onChangeText={(UserEmail) => setUserEmail(UserEmail)}
+            />
+            <InputText
+              type='lock-closed-outline'
+              keyboardType='default'
+              secureTextEntry={true}
+              iconFlag={true}
+              placeholder='Enter Password'
+              onChangeText={(UserPassword) => setUserPassword(UserPassword)}
+            />
             {errortext != '' ? (
               <Text style={styles.errorTextStyle}>
                 {errortext}
@@ -122,7 +100,7 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.skipButtonStyle}
               activeOpacity={0.5}
-              onPress={() => navigation.navigate('DrawerNavigatorRoutesScreen')}>
+              onPress={() => navigation.navigate('DrawerNavigator')}>
               <Text style={styles.buttonTextStyle}>Skip <Ionicons name="arrow-forward-outline" size={20}></Ionicons></Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
@@ -139,14 +117,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#307ecc',
     alignContent: 'center',
-  },
-  SectionStyle: {
-    flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
   },
   buttonStyle: {
     backgroundColor: '#7DE24E',
@@ -178,15 +148,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     paddingVertical: 10,
     fontSize: 16,
-  },
-  inputStyle: {
-    flex: 1,
-    color: 'white',
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: '#dadae8',
   },
   registerTextStyle: {
     color: '#FFFFFF',

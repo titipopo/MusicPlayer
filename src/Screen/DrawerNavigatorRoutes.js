@@ -1,53 +1,143 @@
-import { useColorScheme } from 'react-native';
+// import * as React from 'react';
+// import { View, Text, Button } from 'react-native';
+// // import { NavigationContainer } from '@react-navigation/native';
+// import {
+//   createDrawerNavigator,
+//   DrawerContentScrollView,
+//   DrawerItemList,
+//   DrawerItem,
+// } from '@react-navigation/drawer';
+// import HomeScreen from './HomeScreen';
+// import SettingsScreen from './SettingsScreen';
+// import ProfileScreen from './ProfileScreen';
+
+// function Feed({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Feed Screen</Text>
+//       <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
+//       <Button title="Toggle drawer" onPress={() => navigation.toggleDrawer()} />
+//     </View>
+//   );
+// }
+
+// function Notifications() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Notifications Screen</Text>
+//     </View>
+//   );
+// }
+
+// function CustomDrawerContent(props) {
+//   return (
+//     <DrawerContentScrollView {...props}>
+//       <DrawerItemList {...props} />
+//       <DrawerItem
+//         label="Close drawer"
+//         onPress={() => props.navigation.closeDrawer()}
+//       />
+//       <DrawerItem
+//         label="Toggle drawer"
+//         onPress={() => props.navigation.toggleDrawer()}
+//       />
+//     </DrawerContentScrollView>
+//   );
+// }
+
+// const Drawer = createDrawerNavigator();
+
+// function MyDrawer() {
+//   return (
+//     <Drawer.Navigator
+//       useLegacyImplementation
+//       drawerContent={(props) => <CustomDrawerContent {...props} />}
+//     >
+//       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+//       <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+// export default function DrawerNavigatorRoutesScreen() {
+//   return (
+//     // <NavigationContainer>
+//       <MyDrawer />
+//     // </NavigationContainer>
+//   );
+// }
+
+
+import { useColorScheme, TouchableOpacity } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './DrawerScreens/HomeScreen';
-import SettingsScreen from './DrawerScreens/SettingsScreen';
+import HomeScreen from './HomeScreen';
+import SettingsScreen from './SettingsScreen';
 // import ProfileScreen from './src/screens/ProfileScreen';
 // import SettingsScreen from './src/screens/SettingsScreen';
+import 'react-native-gesture-handler';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {dark, light} from '../theme/theme';
+import ProfileScreen from './ProfileScreen'
 
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 // const Stack = createNativeStackNavigator();
 // const Drawer = createDrawerNavigator();
 
-const DrawerNavigatorRoutesScreen = ({navigation}) => {
+function MyDrawer() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+const DrawerNavigatorRoutesScreen = ({ navigation }) => {
   const scheme = useColorScheme();
   return (
-      <Tab.Navigator
+    <Tab.Navigator
       initialRouteName="Home"
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarAccessibilityLabel: true,
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'lightgrey',
-          // tabBarActiveBackgroundColor: '#222831',
-          // tabBarInactiveBackgroundColor: '#222831',
-          // tabBarHideOnKeyboard: false,
-          // tabBarStyle: {
-          //   backgroundColor: '#222831',
-          //   borderTopColor: '#393E46',
-          // },
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'settings' : 'settings-outline';
-            } else if (route.name === 'Profile') {
-              iconName = focused ? 'person' : 'person-outline';
-            }
-            return <Ionicons name={iconName} size={25} color={color} />;
-          },
-        })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
+      screenOptions={({ route }) => ({
+        headerRight: () => (
+          <TouchableOpacity
+            // style={{backgroundColor: '#222831'}}
+            activeOpacity={0.5}
+            onPress={() => {() => navigation.openDrawer()}}>
+            <Ionicons name={'person-outline'} size={25} />
+          </TouchableOpacity>
+        ),
+        headerShown: true,
+        tabBarShowLabel: false,
+        tabBarAccessibilityLabel: true,
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'lightgrey',
+        // tabBarActiveBackgroundColor: '#222831',
+        // tabBarInactiveBackgroundColor: '#222831',
+        // tabBarHideOnKeyboard: false,
+        // tabBarStyle: {
+        //   backgroundColor: '#222831',
+        //   borderTopColor: '#393E46',
+        // },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'settings' : 'settings-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+          return <Ionicons name={iconName} size={25} color={color} />;
+        },
+      })}>
+      <Tab.Screen name="Main" component={HomeScreen} />
+      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 }
 
