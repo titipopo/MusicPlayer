@@ -1,11 +1,8 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-// import { ContactStackNavigator } from "./StackNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import ProfileScreen from "../ProfileScreen";
-import CustomSidebarMenu from '../CustomSidebarMenu';
-// import SplashScreen from '../SplashScreen'
-// import AuthScreen from '../AuthScreen';
+import CustomSidebarMenu from './CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,16 +17,6 @@ const DrawerNavigator = () => {
             }}
             drawerContent={(props) => <CustomSidebarMenu {...props} />}
         >
-            {/* <Drawer.Screen
-                name="SplashScreen"
-                component={SplashScreen}
-                options={{ headerShown: false }}
-            />
-            <Drawer.Screen
-                name="AuthScreen"
-                component={AuthScreen}
-                options={{ headerShown: false }}
-            /> */}
             <Drawer.Screen name="Main" component={BottomTabNavigator} />
             <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
         </Drawer.Navigator>

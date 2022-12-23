@@ -1,7 +1,8 @@
 import { StyleSheet, TextInput, Keyboard, View } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const InputText = ({type, keyboardType,secureTextEntry, iconFlag, placeholder, onChangeText}) => {
+const InputText = ({props}) => {
+    const {type, keyboardType,secureTextEntry, iconFlag, placeholder, onChangeText} = props;
     return (
         <View style={styles.SectionStyle}>
             {iconFlag ? <View style={styles.test}><Ionicons name={type} size={25} /></View> : null}
@@ -45,8 +46,6 @@ const styles = StyleSheet.create({
         color: 'white',
         paddingLeft: 15,
         paddingRight: 15,
-        // borderWidth: 0,
-        // borderRadius: 30,
     },
     test:{
         alignItems: "center",

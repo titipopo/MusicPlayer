@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -14,7 +14,7 @@ const SplashScreen = ({navigation}) => {
       onAuthStateChanged(auth, user => {
         console.log(user);
         if(user){
-          navigation.navigate('DrawerNavigatorRoutesScreen');
+          navigation.navigate('DrawerNavigator');
         }else{
           navigation.navigate('AuthScreen');
         }

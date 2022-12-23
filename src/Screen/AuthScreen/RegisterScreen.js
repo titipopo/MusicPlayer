@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
-  ScrollView,
-  TouchableOpacity,
+  Image,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import Loader from './Components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { auth } from '../../firebase';
 import InputText from './Components/InputText';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+  const [
+    isRegistraionSuccess,
+    setIsRegistraionSuccess
+  ] = useState(false);
 
   const handleSubmitPress = () => {
     setErrortext('');
@@ -29,23 +33,44 @@ const LoginScreen = ({ navigation }) => {
       alert('Please fill Password');
       return;
     }
+
     setLoading(true);
-    auth.signInWithEmailAndPassword(userEmail, userPassword)
+
+    auth.createUserWithEmailAndPassword(userEmail, userPassword)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log(userCredentials);
-        console.log("Login with" + user.email);
-        navigation.navigate('DrawerNavigator');
+        console.log(user.userEmail);
         setLoading(false);
+        setIsRegistraionSuccess(true);
       })
       .catch(() => {
         setErrortext('error');
         setLoading(false);
       });
   };
-
+  if (isRegistraionSuccess) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#307ecc',
+          justifyContent: 'center',
+        }}>
+        <Ionicons name="checkmark-circle-outline" size={50}></Ionicons>
+        <Text style={styles.successTextStyle}>
+          Registration Successful
+        </Text>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('LoginScreen')}>
+          <Text style={styles.buttonTextStyle}>Login Now</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
-    <SafeAreaView style={styles.mainBody}>
+    <View style={styles.mainBody}>
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps='handled'
@@ -85,31 +110,20 @@ const LoginScreen = ({ navigation }) => {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={handleSubmitPress}>
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
+              <Text style={styles.buttonTextStyle}>Sign up</Text>
             </TouchableOpacity>
             <Text
-              style={styles.registerTextStyle}
-              onPress={() => navigation.navigate('ForGotPasswordScreen')}>
-              forgot password?
+              style={styles.backLoginStyle}
+              onPress={() => navigation.navigate('LoginScreen')}>
+              Already have an account? Log in
             </Text>
-            <Text
-              style={styles.registerTextStyle}
-              onPress={() => navigation.navigate('RegisterScreen')}>
-              New Here ? Register
-            </Text>
-            <TouchableOpacity
-              style={styles.skipButtonStyle}
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('DrawerNavigator')}>
-              <Text style={styles.buttonTextStyle}>Skip <Ionicons name="arrow-forward-outline" size={20}></Ionicons></Text>
-            </TouchableOpacity>
           </KeyboardAvoidingView>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   mainBody: {
@@ -117,6 +131,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#307ecc',
     alignContent: 'center',
+  },
+  SectionStyle: {
+    flexDirection: 'row',
+    height: 40,
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+    margin: 10,
   },
   buttonStyle: {
     backgroundColor: '#7DE24E',
@@ -129,27 +151,23 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     marginTop: 20,
-    marginBottom: 25,
-  },
-  skipButtonStyle: {
-    backgroundColor: '#7DE24E',
-    borderWidth: 0,
-    color: '#fff',
-    borderColor: '#7DE24E',
-    height: 40,
-    alignItems: 'center',
-    borderRadius: 30,
-    marginLeft: 35,
-    marginRight: 35,
-    marginTop: 100,
-    marginBottom: 25,
+    marginBottom: 20,
   },
   buttonTextStyle: {
     color: '#FFFFFF',
     paddingVertical: 10,
     fontSize: 16,
   },
-  registerTextStyle: {
+  inputStyle: {
+    flex: 1,
+    color: 'white',
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#dadae8',
+  },
+  backLoginStyle: {
     color: '#FFFFFF',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -161,5 +179,11 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     fontSize: 14,
+  },
+  successTextStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
+    padding: 30,
   },
 });

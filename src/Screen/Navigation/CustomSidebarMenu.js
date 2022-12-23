@@ -4,17 +4,15 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Text,
-    Linking,
+    Text
 } from 'react-native';
 
 import {
     DrawerContentScrollView,
     DrawerItemList,
-    DrawerItem,
 } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { auth } from '../../firebase';
+import { auth } from '../../../firebase';
 
 const CustomSidebarMenu = (props) => {
     const handleSignOut = () => {

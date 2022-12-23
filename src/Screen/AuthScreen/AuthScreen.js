@@ -28,20 +28,6 @@ const AuthScreen = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          // headerLeft:() =>(
-          //   <Button
-          //     onPress={() => alert('This is a button!')}
-          //     title="Info"
-          //     color="#fff"
-          //   />
-          // ),
-          // headerRight: () => (
-          //   <Button
-          //     onPress={() => alert('This is a button!')}
-          //     title="Info"
-          //     color="#fff"
-          //   />
-          // ),
         }}
       />
       <Stack.Screen
