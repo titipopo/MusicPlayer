@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-gesture-handler';
-import SplashScreen from '../SplashScreen'
-import AuthScreen from '../AuthScreen';
+import SplashScreen from '../SplashScreen/SplashScreen'
+import AuthScreen from '../AuthScreen/AuthScreen';
 import DrawerNavigator from './DrawerNavigator';
 
 const Stack = createNativeStackNavigator();

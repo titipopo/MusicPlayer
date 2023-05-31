@@ -1,7 +1,7 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import BottomTabNavigator from "./BottomTabNavigator";
-import ProfileScreen from "../ProfileScreen";
+import ProfileScreen from "../MainScreen/ProfileScreen";
 import CustomSidebarMenu from './CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();

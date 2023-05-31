@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import Loader from './Components/Loader';
+import Loader from '../Components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { auth } from '../../firebase';
-import InputText from './Components/InputText';
+import { auth } from '../../../firebase';
+import InputText from '../Components/InputText';
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState('');
